@@ -1,0 +1,17 @@
+{
+  "name": "forkify-app",
+  "version": "1.0.0",
+  "description": "recipe application",
+  "license": "ISC",
+  "author": "sheharyar ahmed",
+  "type": "commonjs",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.15.4",
+    "parcel": "^2.15.4"
+  }
+}
