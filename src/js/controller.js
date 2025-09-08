@@ -6,14 +6,6 @@ import "regenerator-runtime/runtime";
 
 const recipeContainer = document.querySelector(".recipe");
 
-const timeout = function (s) {
-  return new Promise(function (_, reject) {
-    setTimeout(function () {
-      reject(new Error(`Request took too long! Timeout after ${s} second`));
-    }, s * 1000);
-  });
-};
-
 // NEW API URL (instead of the one shown in the video)
 // https://forkify-api.jonas.io
 
@@ -47,4 +39,8 @@ const controlRecipes = async function () {
 // controlRecipes();
 // window.addEventListener("hashchange", controlRecipes);
 // window.addEventListener("load", controlRecipes);
-["hashchange", "load"].forEach((ev) => addEventListener(ev, controlRecipes));
+//the below init function is an publisher subscriber design pattern implmentation, where this event this is being handled in controller and the event will be listened in the view, which in this case is recipeView
+const init = function () {
+  recipeView.addHandlerRender(controlRecipes);
+};
+init();
