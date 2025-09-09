@@ -4,6 +4,8 @@ console.log(Fraction);
 class RecipeView {
   #parentElement = document.querySelector(".recipe");
   #data;
+  #errorMessage = "We could not find the recipe, please try another one";
+  #message = "";
 
   #clear() {
     this.#parentElement.innerHTML = "";
@@ -15,7 +17,7 @@ class RecipeView {
       <use href="${icons}#icon-loader"></use>
     </svg>
   </div>`;
-    this.#parentElement.innerHTML = ""; // clear content
+    this.#clear(); // clear content
     this.#parentElement.insertAdjacentHTML("afterbegin", markup);
   };
 
@@ -28,6 +30,31 @@ class RecipeView {
 
   addHandlerRender(handler) {
     ["hashchange", "load"].forEach((ev) => addEventListener(ev, handler));
+  }
+
+  renderError(message = this.#errorMessage) {
+    const markup = `<div class="error">
+            <div>
+              <svg>
+                <use href="${icons}#icon-alert-triangle"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div>`;
+    this.#clear(); // clear content
+    this.#parentElement.insertAdjacentHTML("afterbegin", markup);
+  }
+  renderMessage(message = this.#message) {
+    const markup = `<div class="error">
+            <div>
+              <svg>
+                <use href="${icons}#icon-smile"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div>`;
+    this.#clear(); // clear content
+    this.#parentElement.insertAdjacentHTML("afterbegin", markup);
   }
 
   #generateMarkup() {

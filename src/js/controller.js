@@ -1,5 +1,6 @@
 import * as model from "../js/model.js";
 import recipeView from "./views/recipeView.js";
+import searchView from "./views/searchView.js";
 // console.log(icons);
 import "core-js/stable";
 import "regenerator-runtime/runtime";
@@ -32,9 +33,21 @@ const controlRecipes = async function () {
     // 2. rendering the recipe
     recipeView.render(model.state.recipe);
   } catch (err) {
-    alert(err);
+    recipeView.renderError();
   }
 };
+
+const controlSearchResults = async function () {
+  try {
+    const query = searchView.getQuery();
+    if (!query) return;
+    await model.loadSearchResults(query);
+    console.log(model.state.search.results);
+  } catch (err) {
+    console.log(err);
+  }
+};
+controlSearchResults();
 
 // controlRecipes();
 // window.addEventListener("hashchange", controlRecipes);
@@ -42,5 +55,6 @@ const controlRecipes = async function () {
 //the below init function is an publisher subscriber design pattern implmentation, where this event this is being handled in controller and the event will be listened in the view, which in this case is recipeView
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
+  searchView.addHandlerSearch(controlSearchResults);
 };
 init();
