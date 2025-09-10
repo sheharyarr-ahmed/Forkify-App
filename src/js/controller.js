@@ -2,6 +2,7 @@ import * as model from "../js/model.js";
 import recipeView from "./views/recipeView.js";
 import searchView from "./views/searchView.js";
 import resultsView from "./views/resultsView.js";
+import paginationView from "../js/views/paginationView.js";
 // console.log(icons);
 import "core-js/stable";
 import "regenerator-runtime/runtime";
@@ -45,14 +46,20 @@ const controlSearchResults = async function () {
   try {
     resultsView.renderSpinner();
     // console.log(resultsView);
+    // 1. get search query
     const query = searchView.getQuery();
     if (!query) return;
+    // 2. load search results
     await model.loadSearchResults(query);
     // console.log(model.state.search.results);
     // resultsView.render(model.state.search.results);
+    // 3. render search results
     console.log("Full results:", model.state.search.results); // 59
-    console.log("Paginated results:", model.getSearchResultsPage(3));
-    resultsView.render(model.getSearchResultsPage());
+    console.log("Paginated results:", model.getSearchResultsPage(5));
+    resultsView.render(model.getSearchResultsPage(4));
+
+    // 4. render initial pagination buttons
+    paginationView.render(model.state.search);
   } catch (err) {
     console.log(err);
   }
@@ -63,8 +70,17 @@ const controlSearchResults = async function () {
 // window.addEventListener("hashchange", controlRecipes);
 // window.addEventListener("load", controlRecipes);
 //the below init function is an publisher subscriber design pattern implmentation, where this event this is being handled in controller and the event will be listened in the view, which in this case is recipeView
+const controlPagination = function (goToPage) {
+  // console.log(goToPage);
+  // 1. RENDER NEW RESULTS
+  resultsView.render(model.getSearchResultsPage(goToPage));
+
+  // 2. RENDER NEW PAGINATION BUTTONS
+  paginationView.render(model.state.search);
+};
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 };
 init();
