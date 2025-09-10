@@ -5,9 +5,9 @@ import resultsView from "./views/resultsView.js";
 // console.log(icons);
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-if (module.hot) {
-  module.hot.accept();
-}
+// if (module.hot) {
+//   module.hot.accept();
+// }
 
 const recipeContainer = document.querySelector(".recipe");
 
@@ -49,7 +49,10 @@ const controlSearchResults = async function () {
     if (!query) return;
     await model.loadSearchResults(query);
     // console.log(model.state.search.results);
-    resultsView.render(model.state.search.results);
+    // resultsView.render(model.state.search.results);
+    console.log("Full results:", model.state.search.results); // 59
+    console.log("Paginated results:", model.getSearchResultsPage(3));
+    resultsView.render(model.getSearchResultsPage());
   } catch (err) {
     console.log(err);
   }

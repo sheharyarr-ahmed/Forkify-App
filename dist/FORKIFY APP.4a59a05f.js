@@ -677,7 +677,9 @@ var _searchViewJsDefault = parcelHelpers.interopDefault(_searchViewJs);
 var _resultsViewJs = require("./views/resultsView.js");
 var _resultsViewJsDefault = parcelHelpers.interopDefault(_resultsViewJs);
 var _runtime = require("regenerator-runtime/runtime");
-if (module.hot) module.hot.accept();
+// if (module.hot) {
+//   module.hot.accept();
+// }
 const recipeContainer = document.querySelector(".recipe");
 // NEW API URL (instead of the one shown in the video)
 // https://forkify-api.jonas.io
@@ -714,7 +716,10 @@ const controlSearchResults = async function() {
         if (!query) return;
         await _modelJs.loadSearchResults(query);
         // console.log(model.state.search.results);
-        (0, _resultsViewJsDefault.default).render(_modelJs.state.search.results);
+        // resultsView.render(model.state.search.results);
+        console.log("Full results:", _modelJs.state.search.results); // 59
+        console.log("Paginated results:", _modelJs.getSearchResultsPage(3));
+        (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage());
     } catch (err) {
         console.log(err);
     }
@@ -2604,14 +2609,17 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "state", ()=>state);
 parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
 parcelHelpers.export(exports, "loadSearchResults", ()=>loadSearchResults);
+parcelHelpers.export(exports, "getSearchResultsPage", ()=>getSearchResultsPage);
 var _configJs = require("../js/config.js");
 var _helpersJs = require("../js/helpers.js");
 const state = {
     recipe: {},
     search: {
         query: "",
-        results: []
-    }
+        results: [],
+        resultsPerPage: (0, _configJs.RESULTS_PER_PAGE)
+    },
+    page: 1
 };
 const loadRecipe = async function(id) {
     try {
@@ -2647,13 +2655,19 @@ const loadSearchResults = async function(query) {
                 image: rec.image_url
             };
         });
-        console.log(state.search.results);
+    // console.log(state.search.results);
     } catch (err) {
         console.error(`${err}\u{1F4A9}\u{1F4A9}\u{1F4A3}`);
         throw err;
     }
 };
-loadSearchResults("pizza");
+const getSearchResultsPage = function(page = state.search.page) {
+    state.search.page = page;
+    const start = (page - 1) * state.search.resultsPerPage;
+    const end = page * state.search.resultsPerPage;
+    //   console.log(start, end);
+    return state.search.results.slice(start, end);
+};
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../js/config.js":"2hPh4","../js/helpers.js":"7nL9P"}],"2hPh4":[function(require,module,exports,__globalThis) {
 // In modern projects, we often create a config file (e.g. config.js, config.json) to keep constants, settings, and reusable values in one central place. Instead of scattering numbers, strings, or URLs throughout the codebase, we define them once and reuse them everywhere.
@@ -2661,8 +2675,10 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "API_URL", ()=>API_URL);
 parcelHelpers.export(exports, "TIMEOUT_SEC", ()=>TIMEOUT_SEC);
+parcelHelpers.export(exports, "RESULTS_PER_PAGE", ()=>RESULTS_PER_PAGE);
 const API_URL = " https://forkify-api.jonas.io/api/v2/recipes/";
 const TIMEOUT_SEC = 50;
+const RESULTS_PER_PAGE = 10;
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"7nL9P":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
