@@ -48,6 +48,8 @@ const controlSearchResults = async function () {
   try {
     resultsView.renderSpinner();
     // console.log(resultsView);
+    // 0.update results view to amrk selected search result
+    resultsView.update(model.getSearchResultsPage());
     // 1. get search query
     const query = searchView.getQuery();
     if (!query) return;
@@ -84,7 +86,8 @@ const controlPagination = function (goToPage) {
 const controlServings = function (newServings) {
   //update the recipe servings (in state)
   model.updateServings(newServings);
-  recipeView.render(model.state.recipe);
+  // recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
 };
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
