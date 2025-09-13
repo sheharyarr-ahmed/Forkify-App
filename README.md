@@ -204,7 +204,6 @@ Inspired by Forkify? Fork the repo, experiment with new features (e.g., user aut
 
 ## 📜 **License**
 
-This project is open-sourced under the MIT License.  
-It represents the culmination of my JavaScript learning journey — covering modern ES6+ features, architecture patterns, and best practices.
+This project represents the culmination of my JavaScript learning journey — covering modern ES6+ features, architecture patterns, and best practices.
 
 ---
