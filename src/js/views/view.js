@@ -15,7 +15,15 @@ export default class View {
     this._clear(); // clear content
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
   };
-
+  /**
+   *
+   * @param {Object | Object []} data the data to be rendered i.e recipe
+   * @param {boolean} [render= true] if false create markup stringinstead of redereing to the  dom
+   * @returns {undefined | string} a markup string is returned if render = false
+   * @this {Object} view instance
+   * @author Sheharyar Ahmed
+   * @todo Finsih the imlementation.
+   */
   render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
