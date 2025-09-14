@@ -4,6 +4,18 @@
 
 ---
 
+## 📸 **Screenshots**
+
+A quick glimpse of the Forkify App in action.
+
+![Screenshot 1](screenshots/1.png)
+![Screenshot 2](screenshots/2.png)
+![Screenshot 3](screenshots/3.png)
+
+---
+
+---
+
 ## 🌍 **Overview**
 
 The **Forkify Recipe App** is a production-ready JavaScript masterpiece built with **ES6+ features**, **modular architecture**, and the **MVC (Model–View–Controller) pattern**. This project chronicles my evolution as an aspiring full-stack developer, blending clean code principles with real-world functionality. Key highlights include seamless API integration, robust state management, and user-centric features like bookmarking and recipe uploads—all optimized for performance and scalability.
